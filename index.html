@@ -201,15 +201,31 @@ main{flex:1;margin:62px 0 160px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
-/* IAE */
-.map-branch{fill:#777;font-size:14.6px;font-family:Pretendard,sans-serif}.map-branch.is-star{fill:#333}
-.map-kw{fill:#777;font-size:13.3px;font-family:Pretendard,sans-serif}
-.map-dt{fill:#bbb;font-size:12px;font-family:Pretendard,sans-serif}
-.analysis-list .copy p+p{margin-top:6px}
-.analysis-list .copy p{display:flex;gap:12px}
-.copy .kw{flex:0 0 150px;color:var(--ink)}
-.copy .ev{color:#bbb;font-size:10pt}
-.copy a{color:var(--ink)}.copy a:hover{text-decoration:underline;text-underline-offset:4px}
+/* IAE — 박스 */
+.cards,.stack{padding:20px 0 0 28px;max-width:calc(var(--title-w) + var(--col-gap) + var(--body-w) + 28px)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cards-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.stack{display:flex;flex-direction:column;gap:12px}
+.box{border:1px solid var(--rule);border-radius:12px;padding:18px 20px 20px;background:#fff;transition:box-shadow 260ms var(--ease),border-color 260ms}
+.box:hover{border-color:transparent;box-shadow:0 6px 18px rgba(0,0,0,.06),0 1px 4px rgba(0,0,0,.03)}
+.box p{margin:0;word-break:keep-all;overflow-wrap:anywhere}
+.box-label{display:flex;align-items:center;gap:8px;color:var(--faint);font-size:10pt;margin-bottom:8px!important}
+.box-title{color:var(--ink);margin-bottom:6px!important}
+.box-body{color:var(--text);line-height:1.65}
+.box-src{margin-top:12px!important;padding-top:10px;border-top:1px solid var(--rule);color:var(--faint);font-size:10pt;line-height:1.6}
+.tag{color:var(--ink);border:1px solid var(--ink);border-radius:999px;padding:0 8px;font-size:9pt;line-height:18px}
+.hyp-claim{color:var(--ink);font-size:13.5pt;line-height:1.55}
+.hyp.is-star{border-color:#c4c4c4}
+.hyp-grid{display:grid;grid-template-columns:96px minmax(0,1fr);column-gap:20px;row-gap:12px;margin:16px 0 0;padding-top:16px;border-top:1px solid var(--rule)}
+.hyp-grid dt{color:var(--faint);font-size:10pt;line-height:1.75}
+.hyp-grid dd{margin:0;line-height:1.65;word-break:keep-all}
+.hyp-grid .ink{color:var(--ink)}.hyp-grid .muted{color:var(--muted)}.hyp-grid .faint{color:var(--faint)}
+.follow{list-style:none;margin:0;padding:0;color:var(--text)}
+.follow li{position:relative;padding-left:18px}.follow li+li{margin-top:4px}
+.follow li::before{content:'→';position:absolute;left:0;color:var(--faint)}
+.opening{background:#f7f7f7;border-color:#f7f7f7}
+@media(max-width:1000px){.cards,.cards-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.cards,.stack{padding-left:0}.cards,.cards-4{grid-template-columns:1fr}.hyp-grid{grid-template-columns:1fr;row-gap:4px}.hyp-grid dd{margin-bottom:10px}}
 </style>
 <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window)document.documentElement.classList.add('has-reveal')</script>
 </head>
@@ -221,292 +237,41 @@ main{flex:1;margin:62px 0 160px}
 <main id="top">
 <header class="identity page"><h1><span class="slash">/</span>IAE</h1></header>
 <div class="page-shell">
-<div class="toc-rail"><nav class="toc" aria-label="페이지 목차"><span class="toc-bar" aria-hidden="true"></span><ol><li><a href="#assignment">과제</a></li><li><a href="#interviewee">인터뷰이</a></li><li><a href="#map">map</a></li><li><a href="#analysis">분석</a></li><li><a href="#questions">질문</a></li><li><a href="#versions">버전 로그</a></li></ol></nav></div>
+<div class="toc-rail"><nav class="toc" aria-label="페이지 목차"><span class="toc-bar" aria-hidden="true"></span><ol><li><a href="#assignment">과제</a></li><li><a href="#glance">한눈에</a></li><li><a href="#skills">역량</a></li><li><a href="#hypotheses">가설 · 질문</a></li><li><a href="#versions">버전 로그</a></li></ol></nav></div>
 <div class="page page-grid">
 <div class="sections">
 <section class="log-section " id="assignment" aria-labelledby="assignment-title" data-open="false">
 <h2 class="log-title" id="assignment-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="assignment-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>과제</span></button></h2>
 <div class="section-body" id="assignment-body" role="region" aria-labelledby="assignment-title"><div class="section-clip"><div class="content">
-<ul class="scene-list" aria-label="과제">
-<li class="row" id="과제-0"><button type="button" class="row-title" aria-expanded="false" aria-controls="과제-0-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">과제</span></button><div class="row-panel" id="과제-0-panel" role="region" aria-label="과제"><div class="row-clip"><div class="copy">
-<p>지난 수업에서 고른 직업인과 관련된 자료(책, 뉴스, 다큐, 인터뷰 등)를 찾아보고, 그 인물·직업과 관련된 요소와 장면을 최대한 구체적으로 상상해서 나만의 방법으로 시각화·정리한다. 최소 30개.</p><p>수업 때와 다른 직업으로 바꿔도 된다.</p>
-</div></div></div></li>
-<li class="row" id="과제-1"><button type="button" class="row-title" aria-expanded="false" aria-controls="과제-1-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">산출물</span></button><div class="row-panel" id="과제-1-panel" role="region" aria-label="산출물"><div class="row-clip"><div class="copy">
-<p>직업인 콘텐츠 분석 (피그잼 섹션 1장)</p><p>업데이트된 최종 인터뷰이 섭외 메일 (텍스트)</p><p>최종 인터뷰이 섭외 메일 시도 1회와 제출 시점의 현황</p>
-</div></div></div></li>
-<li class="row" id="과제-2"><button type="button" class="row-title" aria-expanded="false" aria-controls="과제-2-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">마감</span></button><div class="row-panel" id="과제-2-panel" role="region" aria-label="마감"><div class="row-clip"><div class="copy">
-<p>11/16(월) 23:59</p><p>지각 마감 11/17(화) 23:59. 그 뒤로는 제출할 수 없다.</p>
-</div></div></div></li>
-<li class="row" id="과제-3"><button type="button" class="row-title" aria-expanded="false" aria-controls="과제-3-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">목적</span></button><div class="row-panel" id="과제-3-panel" role="region" aria-label="목적"><div class="row-clip"><div class="copy">
-<p>장면을 바탕으로 그 사람에 대한 가설, 편견, 추측을 갖고 더 뾰족한 질문을 만드는 것. 장면은 중립적으로 쓰고, 이어지는 주관적인 판단은 마음속으로 함께 떠올린다.</p>
-</div></div></div></li>
-</ul>
+<div class="cards cards-4"><article class="box"><p class="box-label">과제</p><p class="box-body">지난 수업에서 고른 직업인의 자료(책, 뉴스, 다큐, 인터뷰)를 찾아보고, 그 인물과 직업의 장면을 최대한 구체적으로 상상해 나만의 방법으로 정리한다. 최소 30개.</p></article><article class="box"><p class="box-label">산출물</p><p class="box-body">직업인 콘텐츠 분석 1장 · 최종 인터뷰이 섭외 메일 · 섭외 시도 1회와 현황</p></article><article class="box"><p class="box-label">마감</p><p class="box-body">11/16(월) 23:59 · 지각 마감 11/17(화) 23:59</p></article><article class="box"><p class="box-label">목적</p><p class="box-body">장면에서 가설과 편견을 끌어내 더 뾰족한 질문을 만든다. 장면은 중립적으로, 판단은 따로.</p></article></div>
 </div></div></div>
 </section>
 
-<section class="log-section " id="interviewee" aria-labelledby="interviewee-title" data-open="false">
-<h2 class="log-title" id="interviewee-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="interviewee-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>인터뷰이</span></button></h2>
-<div class="section-body" id="interviewee-body" role="region" aria-labelledby="interviewee-title"><div class="section-clip"><div class="content">
-<ul class="scene-list" aria-label="인터뷰이">
-<li class="row" id="인터뷰이-0"><button type="button" class="row-title" aria-expanded="false" aria-controls="인터뷰이-0-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">뮤온 MUON</span></button><div class="row-panel" id="인터뷰이-0-panel" role="region" aria-label="뮤온 MUON"><div class="row-clip"><div class="copy">
-<p>케이팝 앨범과 브랜드를 오가는 그래픽 스튜디오. 나의 최종 인터뷰이.</p><p><a href="https://muon-office.com/" target="_blank" rel="noopener noreferrer">muon-office.com ↗</a></p>
-</div></div></div></li>
-<li class="row" id="인터뷰이-1"><button type="button" class="row-title" aria-expanded="false" aria-controls="인터뷰이-1-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">하는 일</span></button><div class="row-panel" id="인터뷰이-1-panel" role="region" aria-label="하는 일"><div class="row-clip"><div class="copy">
-<p>앨범 아이덴티티, 타이틀 로고, 아티스트 아이덴티티와 로고 모션, 브랜드 아이덴티티, 시즌 그래픽, 팝업, 웹사이트, 아트 디렉션.</p>
-</div></div></div></li>
-<li class="row" id="인터뷰이-2"><button type="button" class="row-title" aria-expanded="false" aria-controls="인터뷰이-2-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">2026</span></button><div class="row-panel" id="인터뷰이-2-panel" role="region" aria-label="2026"><div class="row-clip"><div class="copy">
-<p>SHINee 앨범과 피지컬 앨범, TYPESERVICE 리브랜딩과 웹사이트, Tuomio 26SP 캠페인 크리에이티브 디렉션과 세트 디자인, Oafish 웹사이트 디자인과 개발.</p>
-</div></div></div></li>
-<li class="row" id="인터뷰이-3"><button type="button" class="row-title" aria-expanded="false" aria-controls="인터뷰이-3-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">2025</span></button><div class="row-panel" id="인터뷰이-3-panel" role="region" aria-label="2025"><div class="row-clip"><div class="copy">
-<p>IVE, ITZY, CRAVITY, HOSHI x WOOZI, HEARTS2HEARTS, Spotify x aespa 팝업, LE SSERAFIM 시즌 그리팅.</p>
-</div></div></div></li>
-<li class="row" id="인터뷰이-4"><button type="button" class="row-title" aria-expanded="false" aria-controls="인터뷰이-4-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">자체 작업</span></button><div class="row-panel" id="인터뷰이-4-panel" role="region" aria-label="자체 작업"><div class="row-clip"><div class="copy">
-<p>MUON MAGAZINE(2024, AI 사용), MUON STREET, BAPTISM, MUON TABLE &amp; STOOL, 드로잉 연습 DRAFT 01.</p>
-</div></div></div></li>
-<li class="row" id="인터뷰이-5"><button type="button" class="row-title" aria-expanded="false" aria-controls="인터뷰이-5-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">왜 궁금한가</span></button><div class="row-panel" id="인터뷰이-5-panel" role="region" aria-label="왜 궁금한가"><div class="row-clip"><div class="copy">
-<p>나는 UXUI를 한다. 문제를 푸는 디자인보다 시각적 번역, 감성 전달에 초점이 맞춰진 분야라 결이 다르다. 현업 크리에이티브 디렉터가 어떤 생각으로 디자인하고 일을 굴리는지 듣고 싶다.</p>
-</div></div></div></li>
-</ul>
+<section class="log-section " id="glance" aria-labelledby="glance-title" data-open="false" data-default-open="true">
+<h2 class="log-title" id="glance-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="glance-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>한눈에</span></button></h2>
+<div class="section-body" id="glance-body" role="region" aria-labelledby="glance-title"><div class="section-clip"><div class="content">
+<div class="cards"><article class="box"><p class="box-label">누구</p><p class="box-title">뮤온 MUON</p><p class="box-body">케이팝 앨범과 브랜드를 오가는 그래픽 스튜디오. 나의 최종 인터뷰이.</p></article><article class="box"><p class="box-label">일의 비율</p><p class="box-title">절반 넘게 케이팝</p><p class="box-body">최근 2년 작업 목록의 절반 넘게가 앨범과 아티스트 일. 나머지는 패션, 카페 브랜드, 전시, 자체 작업.</p></article><article class="box"><p class="box-label">대표 작업</p><p class="box-title">앨범부터 팝업까지</p><p class="box-body">SHINee, IVE, ITZY, CRAVITY 앨범 · TYPESERVICE 브랜드 · Spotify x aespa 팝업</p></article><article class="box"><p class="box-label">2026의 변화</p><p class="box-title">그래픽 밖으로</p><p class="box-body">캠페인 크리에이티브 디렉션, 세트 디자인, 웹사이트 개발까지 직접 한다.</p></article><article class="box"><p class="box-label">자체 작업</p><p class="box-title">클라이언트 없는 일</p><p class="box-body">MUON MAGAZINE(AI 사용), MUON TABLE &amp; STOOL, 드로잉 연습 DRAFT 01</p></article><article class="box"><p class="box-label">내가 궁금한 것</p><p class="box-title">고르고 지키는 기준</p><p class="box-body">나는 문제를 푸는 UXUI를 한다. 감성을 옮기는 일을 하는 현업 CD는 무엇을 기준으로 고르고, 무엇을 끝까지 지키는가.</p></article></div>
 </div></div></div>
 </section>
 
-<section class="log-section graph-section" id="map" aria-labelledby="map-title" data-open="false">
-<h2 class="log-title" id="map-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="map-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>map</span></button></h2>
-<div class="section-body" id="map-body" role="region" aria-labelledby="map-title"><div class="section-clip"><div class="content">
-<div class="graph-wrap">
-<div class="graph-intro">
-<p class="graph-title">뮤온의 크리에이티브 디렉터</p>
-<p class="graph-desc">현업 CD에게 필요한 것을 단어로 펼친 지도.</p>
-<p class="graph-meta">큰 갈래 7개 · 키워드 30개 · 세부 77개</p>
-</div>
-<p class="graph-caption">큰 갈래 → 키워드</p>
-<svg class="graph-chart" viewBox="0 0 1000 972" role="img" aria-label="뮤온 크리에이티브 디렉터 지도: 큰 갈래 7개와 키워드 30개">
-<path d="M44 486.0 L132.0 486.0 L132.0 82.0 L220 82.0 M44 486.0 L132.0 486.0 L132.0 234.0 L220 234.0 M44 486.0 L132.0 486.0 L132.0 386.0 L220 386.0 M44 486.0 L132.0 486.0 L132.0 525.0 L220 525.0 M44 486.0 L132.0 486.0 L132.0 664.0 L220 664.0 M44 486.0 L132.0 486.0 L132.0 790.0 L220 790.0 M44 486.0 L132.0 486.0 L132.0 890.0 L220 890.0 M220 82.0 L410 82.0 L410 30.0 L480 30.0 M220 82.0 L410 82.0 L410 56.0 L480 56.0 M220 82.0 L410 82.0 L410 82.0 L480 82.0 M220 82.0 L410 82.0 L410 108.0 L480 108.0 M220 82.0 L410 82.0 L410 134.0 L480 134.0 M220 234.0 L410 234.0 L410 182.0 L480 182.0 M220 234.0 L410 234.0 L410 208.0 L480 208.0 M220 234.0 L410 234.0 L410 234.0 L480 234.0 M220 234.0 L410 234.0 L410 260.0 L480 260.0 M220 234.0 L410 234.0 L410 286.0 L480 286.0 M220 386.0 L410 386.0 L410 334.0 L480 334.0 M220 386.0 L410 386.0 L410 360.0 L480 360.0 M220 386.0 L410 386.0 L410 386.0 L480 386.0 M220 386.0 L410 386.0 L410 412.0 L480 412.0 M220 386.0 L410 386.0 L410 438.0 L480 438.0 M220 525.0 L410 525.0 L410 486.0 L480 486.0 M220 525.0 L410 525.0 L410 512.0 L480 512.0 M220 525.0 L410 525.0 L410 538.0 L480 538.0 M220 525.0 L410 525.0 L410 564.0 L480 564.0 M220 664.0 L410 664.0 L410 612.0 L480 612.0 M220 664.0 L410 664.0 L410 638.0 L480 638.0 M220 664.0 L410 664.0 L410 664.0 L480 664.0 M220 664.0 L410 664.0 L410 690.0 L480 690.0 M220 664.0 L410 664.0 L410 716.0 L480 716.0 M220 790.0 L410 790.0 L410 764.0 L480 764.0 M220 790.0 L410 790.0 L410 790.0 L480 790.0 M220 790.0 L410 790.0 L410 816.0 L480 816.0 M220 890.0 L410 890.0 L410 864.0 L480 864.0 M220 890.0 L410 890.0 L410 890.0 L480 890.0 M220 890.0 L410 890.0 L410 916.0 L480 916.0" class="graph-line"></path>
-<circle cx="44" cy="486.0" r="5" class="graph-dot graph-dot-open"></circle>
-<circle cx="220" cy="82.0" r="4" class="graph-dot"></circle>
-<circle cx="220" cy="234.0" r="5" class="graph-dot graph-dot-open"></circle>
-<circle cx="220" cy="386.0" r="4" class="graph-dot"></circle>
-<circle cx="220" cy="525.0" r="4" class="graph-dot"></circle>
-<circle cx="220" cy="664.0" r="4" class="graph-dot"></circle>
-<circle cx="220" cy="790.0" r="4" class="graph-dot"></circle>
-<circle cx="220" cy="890.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="30.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="56.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="82.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="108.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="134.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="182.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="208.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="234.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="260.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="286.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="334.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="360.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="386.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="412.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="438.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="486.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="512.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="538.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="564.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="612.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="638.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="664.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="690.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="716.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="764.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="790.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="816.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="864.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="890.0" r="4" class="graph-dot"></circle>
-<circle cx="480" cy="916.0" r="4" class="graph-dot"></circle>
-<circle cx="44" cy="486.0" r="10" class="graph-hit" tabindex="0"></circle>
-<circle cx="220" cy="82.0" r="10" class="graph-hit" data-scene="branch-0" tabindex="0"></circle>
-<circle cx="220" cy="234.0" r="10" class="graph-hit" data-scene="branch-1" tabindex="0"></circle>
-<circle cx="220" cy="386.0" r="10" class="graph-hit" data-scene="branch-2" tabindex="0"></circle>
-<circle cx="220" cy="525.0" r="10" class="graph-hit" data-scene="branch-3" tabindex="0"></circle>
-<circle cx="220" cy="664.0" r="10" class="graph-hit" data-scene="branch-4" tabindex="0"></circle>
-<circle cx="220" cy="790.0" r="10" class="graph-hit" data-scene="branch-5" tabindex="0"></circle>
-<circle cx="220" cy="890.0" r="10" class="graph-hit" data-scene="branch-6" tabindex="0"></circle>
-<circle cx="480" cy="30.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="56.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="82.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="108.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="134.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="182.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="208.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="234.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="260.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="286.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="334.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="360.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="386.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="412.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="438.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="486.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="512.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="538.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="564.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="612.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="638.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="664.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="690.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="716.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="764.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="790.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="816.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="864.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="890.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<circle cx="480" cy="916.0" r="10" class="graph-hit" tabindex="-1"></circle>
-<text x="44" y="512.0" class="axis-label" text-anchor="start">CD</text>
-<text x="234" y="73.0" class="map-branch">역할</text>
-<text x="234" y="225.0" class="map-branch is-star">역량 · 가장 궁금</text>
-<text x="234" y="377.0" class="map-branch">상대</text>
-<text x="234" y="516.0" class="map-branch">일의 단위</text>
-<text x="234" y="655.0" class="map-branch">긴장</text>
-<text x="234" y="781.0" class="map-branch">변화 · 2026</text>
-<text x="234" y="881.0" class="map-branch">성장 경로</text>
-<text x="494" y="34.5" class="map-kw">번역가</text>
-<text x="660" y="34.5" class="map-dt">음악 → 그래픽 · 콘셉트 → 글자 · 말 → 시안</text>
-<text x="494" y="60.5" class="map-kw">편집자</text>
-<text x="660" y="60.5" class="map-dt">고르기 · 버리기 · 순서</text>
-<text x="494" y="86.5" class="map-kw">감독</text>
-<text x="660" y="86.5" class="map-dt">세트 · 촬영 · 모션</text>
-<text x="494" y="112.5" class="map-kw">얼굴</text>
-<text x="660" y="112.5" class="map-dt">PT · 첫 미팅 · 스튜디오 톤</text>
-<text x="494" y="138.5" class="map-kw">보호자</text>
-<text x="660" y="138.5" class="map-dt">팀의 시간 · 크레딧 · 스튜디오 색</text>
-<text x="494" y="186.5" class="map-kw">눈</text>
-<text x="660" y="186.5" class="map-dt">취향 · 레퍼런스 · 트렌드 감도 · 버리는 기준</text>
-<text x="494" y="212.5" class="map-kw">손</text>
-<text x="660" y="212.5" class="map-dt">레터링 · 타이포그래피 · 모션 감각 · 실물 · 후가공</text>
-<text x="494" y="238.5" class="map-kw">말</text>
-<text x="660" y="238.5" class="map-dt">콘셉트 언어화 · 설득 · 피드백 번역</text>
-<text x="494" y="264.5" class="map-kw">판</text>
-<text x="660" y="264.5" class="map-dt">일정 · 예산 · 범위 · 팀 배분</text>
-<text x="494" y="290.5" class="map-kw">관계</text>
-<text x="660" y="290.5" class="map-dt">협력자 네트워크 · 재의뢰 · 신뢰</text>
-<text x="494" y="338.5" class="map-kw">엔터사</text>
-<text x="660" y="338.5" class="map-dt">A&amp;R · 컴백 일정 · 결재 단계</text>
-<text x="494" y="364.5" class="map-kw">아티스트</text>
-<text x="660" y="364.5" class="map-dt">본인 취향 · 팬덤의 눈</text>
-<text x="494" y="390.5" class="map-kw">브랜드 대표</text>
-<text x="660" y="390.5" class="map-dt">장기 관계 · 시즌마다 새로움</text>
-<text x="494" y="416.5" class="map-kw">협력자</text>
-<text x="660" y="416.5" class="map-dt">포토그래퍼 · 세트 · 인쇄소 · 개발자</text>
-<text x="494" y="442.5" class="map-kw">팀</text>
-<text x="660" y="442.5" class="map-dt">주니어 · 동료 디자이너</text>
-<text x="494" y="490.5" class="map-kw">앨범</text>
-<text x="660" y="490.5" class="map-dt">콘셉트 해석 · 타이틀 로고 · 실물 패키지 · 시즌 그리팅</text>
-<text x="494" y="516.5" class="map-kw">아티스트 아이덴티티</text>
-<text x="660" y="516.5" class="map-dt">로고 · 로고 모션 · 긴 수명</text>
-<text x="494" y="542.5" class="map-kw">브랜드</text>
-<text x="660" y="542.5" class="map-dt">아이덴티티 · 시즌 그래픽 · 팝업 · 웹</text>
-<text x="494" y="568.5" class="map-kw">자체 작업</text>
-<text x="660" y="568.5" class="map-dt">매거진 · 가구 · 드로잉</text>
-<text x="494" y="616.5" class="map-kw">아티스트 색 ↔ 뮤온 색</text>
-<text x="494" y="642.5" class="map-kw">속도 ↔ 완성도</text>
-<text x="494" y="668.5" class="map-kw">유행 ↔ 오래감</text>
-<text x="494" y="694.5" class="map-kw">수주 ↔ 자체 작업</text>
-<text x="494" y="720.5" class="map-kw">손 ↔ AI</text>
-<text x="494" y="768.5" class="map-kw">AI</text>
-<text x="660" y="768.5" class="map-dt">생성 이미지 · 무드보드 · 디렉션의 값 · 매거진 실험</text>
-<text x="494" y="794.5" class="map-kw">범위 확장</text>
-<text x="660" y="794.5" class="map-dt">웹 개발 · 세트 디자인 · 영상</text>
-<text x="494" y="820.5" class="map-kw">시장</text>
-<text x="660" y="820.5" class="map-dt">팬덤 굿즈 · 글로벌 팝업 · 작은 스튜디오</text>
-<text x="494" y="868.5" class="map-kw">디자이너 → AD → CD</text>
-<text x="660" y="868.5" class="map-dt">직접 그리기 · 고르기 · 책임지기</text>
-<text x="494" y="894.5" class="map-kw">스튜디오 운영</text>
-<text x="660" y="894.5" class="map-dt">작은 팀 · 다양한 클라이언트 · 자체 작업</text>
-<text x="494" y="920.5" class="map-kw">포트폴리오</text>
-<text x="660" y="920.5" class="map-dt">소개 글 없는 사이트 · 작업 목록</text>
-</svg>
-<p class="graph-footnote">갈래 점에 올리면 세부와 근거</p>
-<div class="graph-tooltip" id="graph-tooltip" role="tooltip" hidden></div>
-</div>
+<section class="log-section " id="skills" aria-labelledby="skills-title" data-open="false">
+<h2 class="log-title" id="skills-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="skills-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>역량</span></button></h2>
+<div class="section-body" id="skills-body" role="region" aria-labelledby="skills-title"><div class="section-clip"><div class="content">
+<div class="cards"><article class="box"><p class="box-label">역량 1</p><p class="box-title">번역</p><p class="box-body">음악과 콘셉트를 글자와 이미지로 옮기는 힘</p><p class="box-src">앨범 타이틀 로고 · 아티스트 로고 모션 (CRAVITY, BABY DONT CRY)</p></article><article class="box"><p class="box-label">역량 2</p><p class="box-title">선택</p><p class="box-body">많은 안 중에서 하나를 고르고 나머지를 버리는 기준</p><p class="box-src">2025년 작업 목록만 25건. 혼자 다 그릴 수 없는 양</p></article><article class="box"><p class="box-label">역량 3</p><p class="box-title">설득</p><p class="box-body">여러 단계의 결재를 통과시키는 말</p><p class="box-src">엔터사 앨범 일 · 시즌 그리팅처럼 정해진 날짜가 있는 일</p></article><article class="box"><p class="box-label">역량 4</p><p class="box-title">운영</p><p class="box-body">속도가 다른 일을 동시에 굴리는 일정, 범위, 예산 감각</p><p class="box-src">컴백에 맞추는 앨범과 몇 년 이어지는 브랜드를 함께 한다</p></article><article class="box"><p class="box-label">역량 5</p><p class="box-title">관계</p><p class="box-body">다시 부르게 만드는 신뢰</p><p class="box-src">TYPESERVICE 2023 → 2026 리브랜딩 · LE SSERAFIM 시즌 그리팅 25, 26</p></article><article class="box"><p class="box-label">역량 6</p><p class="box-title">확장</p><p class="box-body">그래픽 밖으로 일의 범위를 넓히는 힘</p><p class="box-src">Tuomio 세트 디자인 · Oafish 웹 개발 · 테이블과 스툴</p></article></div>
 </div></div></div>
 </section>
 
-<section class="log-section " id="analysis" aria-labelledby="analysis-title" data-open="false">
-<h2 class="log-title" id="analysis-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="analysis-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>분석</span></button></h2>
-<div class="section-body" id="analysis-body" role="region" aria-labelledby="analysis-title"><div class="section-clip"><div class="content">
-<ul class="qa-list analysis-list" aria-label="뮤온 크리에이티브 디렉터 분석">
-<li class="row" id="branch-0"><button type="button" class="row-title" aria-expanded="false" aria-controls="branch-0-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">역할</span></button><div class="row-panel" id="branch-0-panel" role="region" aria-label="역할"><div class="row-clip"><div class="copy">
-<p><span class="kw">번역가</span><span>음악 → 그래픽 · 콘셉트 → 글자 · 말 → 시안</span></p><p><span class="kw">편집자</span><span>고르기 · 버리기 · 순서</span></p><p><span class="kw">감독</span><span>세트 <span class="ev">Tuomio 26SP</span> · 촬영 <span class="ev">ZENSAI · TOPOLOGY</span> · 모션 <span class="ev">CRAVITY 로고 모션</span></span></p><p><span class="kw">얼굴</span><span>PT · 첫 미팅 · 스튜디오 톤</span></p><p><span class="kw">보호자</span><span>팀의 시간 · 크레딧 · 스튜디오 색</span></p>
-</div></div></div></li>
-<li class="row" id="branch-1"><button type="button" class="row-title" aria-expanded="false" aria-controls="branch-1-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">역량 · 가장 궁금</span></button><div class="row-panel" id="branch-1-panel" role="region" aria-label="역량 · 가장 궁금"><div class="row-clip"><div class="copy">
-<p><span class="kw">눈</span><span>취향 · 레퍼런스 · 트렌드 감도 · 버리는 기준</span></p><p><span class="kw">손</span><span>레터링 <span class="ev">타이틀 로고 다수</span> · 타이포그래피 · 모션 감각 · 실물 · 후가공 <span class="ev">SHINee 피지컬 앨범</span></span></p><p><span class="kw">말</span><span>콘셉트 언어화 · 설득 · 피드백 번역</span></p><p><span class="kw">판</span><span>일정 · 예산 · 범위 · 팀 배분</span></p><p><span class="kw">관계</span><span>협력자 네트워크 · 재의뢰 <span class="ev">TYPESERVICE 2023~</span> · 신뢰</span></p>
-</div></div></div></li>
-<li class="row" id="branch-2"><button type="button" class="row-title" aria-expanded="false" aria-controls="branch-2-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">상대</span></button><div class="row-panel" id="branch-2-panel" role="region" aria-label="상대"><div class="row-clip"><div class="copy">
-<p><span class="kw">엔터사</span><span>A&amp;R · 컴백 일정 · 결재 단계</span></p><p><span class="kw">아티스트</span><span>본인 취향 · 팬덤의 눈</span></p><p><span class="kw">브랜드 대표</span><span>장기 관계 · 시즌마다 새로움</span></p><p><span class="kw">협력자</span><span>포토그래퍼 · 세트 · 인쇄소 · 개발자</span></p><p><span class="kw">팀</span><span>주니어 · 동료 디자이너</span></p>
-</div></div></div></li>
-<li class="row" id="branch-3"><button type="button" class="row-title" aria-expanded="false" aria-controls="branch-3-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">일의 단위</span></button><div class="row-panel" id="branch-3-panel" role="region" aria-label="일의 단위"><div class="row-clip"><div class="copy">
-<p><span class="kw">앨범</span><span>콘셉트 해석 · 타이틀 로고 · 실물 패키지 · 시즌 그리팅 <span class="ev">LE SSERAFIM 25 · 26</span></span></p><p><span class="kw">아티스트 아이덴티티</span><span>로고 · 로고 모션 · 긴 수명 <span class="ev">CRAVITY · HEARTS2HEARTS</span></span></p><p><span class="kw">브랜드</span><span>아이덴티티 · 시즌 그래픽 · 팝업 <span class="ev">Spotify x aespa</span> · 웹 <span class="ev">Oafish · Typeservice</span></span></p><p><span class="kw">자체 작업</span><span>매거진 <span class="ev">MUON MAGAZINE</span> · 가구 <span class="ev">TABLE &amp; STOOL</span> · 드로잉 <span class="ev">DRAFT 01</span></span></p>
-</div></div></div></li>
-<li class="row" id="branch-4"><button type="button" class="row-title" aria-expanded="false" aria-controls="branch-4-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">긴장</span></button><div class="row-panel" id="branch-4-panel" role="region" aria-label="긴장"><div class="row-clip"><div class="copy">
-<p><span class="kw">아티스트 색 ↔ 뮤온 색</span></p><p><span class="kw">속도 ↔ 완성도</span></p><p><span class="kw">유행 ↔ 오래감</span></p><p><span class="kw">수주 ↔ 자체 작업</span></p><p><span class="kw">손 ↔ AI</span></p>
-</div></div></div></li>
-<li class="row" id="branch-5"><button type="button" class="row-title" aria-expanded="false" aria-controls="branch-5-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">변화 · 2026</span></button><div class="row-panel" id="branch-5-panel" role="region" aria-label="변화 · 2026"><div class="row-clip"><div class="copy">
-<p><span class="kw">AI</span><span>생성 이미지 · 무드보드 · 디렉션의 값 · 매거진 실험 <span class="ev">MUON MAGAZINE VOL.1</span></span></p><p><span class="kw">범위 확장</span><span>웹 개발 · 세트 디자인 · 영상</span></p><p><span class="kw">시장</span><span>팬덤 굿즈 · 글로벌 팝업 · 작은 스튜디오 <span class="ev">RemixTaipei</span></span></p>
-</div></div></div></li>
-<li class="row" id="branch-6"><button type="button" class="row-title" aria-expanded="false" aria-controls="branch-6-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">성장 경로</span></button><div class="row-panel" id="branch-6-panel" role="region" aria-label="성장 경로"><div class="row-clip"><div class="copy">
-<p><span class="kw">디자이너 → AD → CD</span><span>직접 그리기 · 고르기 · 책임지기</span></p><p><span class="kw">스튜디오 운영</span><span>작은 팀 · 다양한 클라이언트 · 자체 작업</span></p><p><span class="kw">포트폴리오</span><span>소개 글 없는 사이트 <span class="ev">muon-office.com</span> · 작업 목록</span></p>
-</div></div></div></li>
-</ul>
-</div></div></div>
-</section>
-
-<section class="log-section interview" id="questions" aria-labelledby="questions-title" data-open="false">
-<h2 class="log-title" id="questions-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="questions-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>질문</span></button></h2>
-<div class="section-body" id="questions-body" role="region" aria-labelledby="questions-title"><div class="section-clip"><div class="content">
-<p class="interview-meta">인터뷰어 조용주 · 인터뷰이 뮤온</p>
-<ul class="qa-list" aria-label="뮤온에게 물어볼 것">
-<li class="row" id="q-0"><button type="button" class="row-title" aria-expanded="false" aria-controls="q-0-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">질문 1. 음악을 글자로 옮기는 첫 단계는 뭐예요?</span></button><div class="row-panel" id="q-0-panel" role="region" aria-label="질문 1. 음악을 글자로 옮기는 첫 단계는 뭐예요?"><div class="row-clip"><div class="copy">
-<p class="qa-follow"><span>가설</span>작가보다 번역가</p><p class="qa-note">역할</p>
-</div></div></div></li>
-<li class="row" id="q-1"><button type="button" class="row-title" aria-expanded="false" aria-controls="q-1-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">질문 2. 가장 아까웠던 버린 안은 뭐예요?</span></button><div class="row-panel" id="q-1-panel" role="region" aria-label="질문 2. 가장 아까웠던 버린 안은 뭐예요?"><div class="row-clip"><div class="copy">
-<p class="qa-follow"><span>가설</span>손보다 눈</p><p class="qa-note">역량</p>
-</div></div></div></li>
-<li class="row" id="q-2"><button type="button" class="row-title" aria-expanded="false" aria-controls="q-2-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">질문 3. 결재마다 시안이 바뀐 적이 있나요?</span></button><div class="row-panel" id="q-2-panel" role="region" aria-label="질문 3. 결재마다 시안이 바뀐 적이 있나요?"><div class="row-clip"><div class="copy">
-<p class="qa-follow"><span>가설</span>가장 어려운 상대는 결재 단계</p><p class="qa-note">상대</p>
-</div></div></div></li>
-<li class="row" id="q-3"><button type="button" class="row-title" aria-expanded="false" aria-controls="q-3-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">질문 4. 앨범 일과 브랜드 일, 하루가 어떻게 달라요?</span></button><div class="row-panel" id="q-3-panel" role="region" aria-label="질문 4. 앨범 일과 브랜드 일, 하루가 어떻게 달라요?"><div class="row-clip"><div class="copy">
-<p class="qa-follow"><span>가설</span>앨범은 속도, 브랜드는 시간</p><p class="qa-note">일의 단위</p>
-</div></div></div></li>
-<li class="row" id="q-4"><button type="button" class="row-title" aria-expanded="false" aria-controls="q-4-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">질문 5. 아티스트 색과 부딪힌 순간이 있었나요?</span></button><div class="row-panel" id="q-4-panel" role="region" aria-label="질문 5. 아티스트 색과 부딪힌 순간이 있었나요?"><div class="row-clip"><div class="copy">
-<p class="qa-follow"><span>가설</span>결국 뮤온 색</p><p class="qa-note">긴장</p>
-</div></div></div></li>
-<li class="row" id="q-5"><button type="button" class="row-title" aria-expanded="false" aria-controls="q-5-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">질문 6. AI를 안 쓰기로 정한 단계가 있나요?</span></button><div class="row-panel" id="q-5-panel" role="region" aria-label="질문 6. AI를 안 쓰기로 정한 단계가 있나요?"><div class="row-clip"><div class="copy">
-<p class="qa-follow"><span>가설</span>AI는 무드보드까지</p><p class="qa-note">변화 · 2026</p>
-</div></div></div></li>
-<li class="row" id="q-6"><button type="button" class="row-title" aria-expanded="false" aria-controls="q-6-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">질문 7. 마지막으로 직접 그린 작업은 뭐예요?</span></button><div class="row-panel" id="q-6-panel" role="region" aria-label="질문 7. 마지막으로 직접 그린 작업은 뭐예요?"><div class="row-clip"><div class="copy">
-<p class="qa-follow"><span>가설</span>그리는 사람에서 고르는 사람으로</p><p class="qa-note">성장 경로</p>
-</div></div></div></li>
-</ul>
+<section class="log-section interview" id="hypotheses" aria-labelledby="hypotheses-title" data-open="false" data-default-open="true">
+<h2 class="log-title" id="hypotheses-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="hypotheses-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>가설 · 질문</span></button></h2>
+<div class="section-body" id="hypotheses-body" role="region" aria-labelledby="hypotheses-title"><div class="section-clip"><div class="content">
+<p class="interview-meta">인터뷰어 조용주 · 인터뷰이 뮤온 크리에이티브 디렉터</p><div class="stack"><article class="box opening"><p class="box-label">여는 질문</p><p class="hyp-claim">요즘 하루는 어떻게 흘러가세요? 그중 직접 손으로 디자인하는 시간은 얼마나 돼요?</p><p class="box-body">가설 1로 바로 이어진다. 답에 나온 시간 비율을 붙잡고 다음 질문으로.</p></article><article class="box hyp is-star" id="h1"><p class="box-label">가설 1<span class="tag">가장 궁금</span></p><p class="hyp-claim">뮤온의 CD는 만드는 사람보다 고르는 사람이다. 핵심 역량은 손보다 눈이다.</p><dl class="hyp-grid"><dt>근거</dt><dd class="muted">작업 범위가 앨범, 브랜드, 웹, 세트로 넓어졌고 한 해 작업만 25건이다.</dd><dt>질문</dt><dd class="ink">요즘 직접 손으로 만드는 시간과 팀이 만든 걸 보고 고르는 시간, 비율이 어떻게 되세요?</dd><dt>꼬리 질문</dt><dd><ul class="follow"><li>마지막으로 처음부터 끝까지 직접 그린 작업은 뭐였어요?</li><li>팀이 가져온 안을 볼 때 가장 먼저 보는 게 뭐예요?</li></ul></dd><dt>이렇게 들으면</dt><dd class="faint">&#x27;타이틀 로고만큼은 아직 직접 그린다&#x27;면, 손이 여전히 중심이다.</dd></dl></article><article class="box hyp" id="h2"><p class="box-label">가설 2</p><p class="hyp-claim">케이팝 일에서 CD의 진짜 상대는 아티스트가 아니라 결재 라인이다.</p><dl class="hyp-grid"><dt>근거</dt><dd class="muted">엔터사 앨범은 A&amp;R, 기획, 아티스트, 경영진을 거친다. 컴백 날짜는 움직이지 않는다.</dd><dt>질문</dt><dd class="ink">앨범 시안 하나가 최종까지 가는 동안 몇 사람을 거치나요? 가장 많이 바뀌는 단계는 어디예요?</dd><dt>꼬리 질문</dt><dd><ul class="follow"><li>마음에 들었던 안이 결재에서 떨어진 적이 있나요? 그때 어떻게 하셨어요?</li></ul></dd><dt>이렇게 들으면</dt><dd class="faint">아티스트와 직접 이야기한다면, 상대는 결재가 아니라 아티스트의 취향이다.</dd></dl></article><article class="box hyp" id="h3"><p class="box-label">가설 3</p><p class="hyp-claim">뮤온다움은 스타일이 아니라 글자에 있다.</p><dl class="hyp-grid"><dt>근거</dt><dd class="muted">타이틀 로고, 아티스트 로고와 로고 모션이 유독 많다. 사이트엔 소개 글 없이 작업만 있다.</dd><dt>질문</dt><dd class="ink">여러 스튜디오 작업 사이에서 뮤온 작업을 알아본다면, 어디서 알아볼 수 있을까요?</dd><dt>꼬리 질문</dt><dd><ul class="follow"><li>클라이언트가 &#x27;뮤온 느낌&#x27;을 원해서 찾아온 적이 있나요? 그 느낌은 뭐였어요?</li></ul></dd><dt>이렇게 들으면</dt><dd class="faint">&#x27;일부러 색을 안 남긴다&#x27;면, 뮤온다움은 결과물이 아니라 일하는 방식에 있다.</dd></dl></article><article class="box hyp" id="h4"><p class="box-label">가설 4</p><p class="hyp-claim">앨범은 속도, 브랜드는 시간. 두 리듬을 함께 굴리는 게 가장 큰 운영 과제다.</p><dl class="hyp-grid"><dt>근거</dt><dd class="muted">컴백에 맞추는 앨범 일과 TYPESERVICE처럼 3년 넘게 이어지는 브랜드 일을 같이 한다.</dd><dt>질문</dt><dd class="ink">앨범 마감과 브랜드 일이 겹치는 주에는 일정을 어떻게 짜세요? 무엇부터 내려놓으세요?</dd><dt>꼬리 질문</dt><dd><ul class="follow"><li>앨범 일과 브랜드 일, 하루가 어떻게 달라요?</li></ul></dd><dt>이렇게 들으면</dt><dd class="faint">팀을 일 종류별로 나눠 둔다면, 운영의 핵심은 일정이 아니라 사람 배치다.</dd></dl></article><article class="box hyp" id="h5"><p class="box-label">가설 5</p><p class="hyp-claim">매거진, 가구 같은 자체 작업은 취미가 아니라 다음 일을 부르는 영업이다.</p><dl class="hyp-grid"><dt>근거</dt><dd class="muted">MUON MAGAZINE, TABLE &amp; STOOL, DRAFT 01을 클라이언트 일과 같은 목록에 올려 둔다.</dd><dt>질문</dt><dd class="ink">클라이언트 없는 작업은 왜 하세요? 그게 실제 의뢰로 이어진 적이 있나요?</dd><dt>꼬리 질문</dt><dd><ul class="follow"><li>자체 작업에서 처음 해 본 게 클라이언트 일로 옮겨 간 적이 있나요?</li></ul></dd><dt>이렇게 들으면</dt><dd class="faint">&#x27;숨 쉬려고 한다&#x27;면, 자체 작업은 영업이 아니라 스튜디오 색을 지키는 장치다.</dd></dl></article><article class="box hyp" id="h6"><p class="box-label">가설 6</p><p class="hyp-claim">AI는 무드보드까지만 쓰고, 최종 결과물에는 쓰지 않는다.</p><dl class="hyp-grid"><dt>근거</dt><dd class="muted">2024년 MUON MAGAZINE VOL.1에 AI를 썼다. 그 뒤 앨범 작업에서는 드러나지 않는다.</dd><dt>질문</dt><dd class="ink">매거진에 AI를 써 본 뒤로, 작업에서 AI를 어디까지 쓰기로 정했어요? 그 선은 왜 거기예요?</dd><dt>꼬리 질문</dt><dd><ul class="follow"><li>클라이언트가 AI로 만든 레퍼런스를 들고 오면 어떻게 하세요?</li><li>AI 때문에 스튜디오가 가려는 방향이 바뀐 게 있나요?</li></ul></dd><dt>이렇게 들으면</dt><dd class="faint">결과물에도 쓴다면, CD의 값은 만드는 데서 고르는 데로 더 옮겨 간다. 가설 1과 이어진다.</dd></dl></article></div>
 </div></div></div>
 </section>
 
 <section class="log-section versions" id="versions" aria-labelledby="versions-title" data-open="false">
 <h2 class="log-title" id="versions-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="versions-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>버전 로그</span></button></h2>
 <div class="section-body" id="versions-body" role="region" aria-labelledby="versions-title"><div class="section-clip"><div class="content">
-<ul class="version-list" aria-label="버전 기록">
-<li class="row" id="ver-v1"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v1-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v1</span></button><div class="row-panel" id="ver-v1-panel" role="region" aria-label="v1"><div class="row-clip"><div class="copy">
-<p>대상 — 에이전시 그래픽 디자이너</p><p>구성 — 프로젝트 8단계 × 마주하는 상대 5가지 표, 장면 50개</p><p>그래픽 디자이너는 범위가 좁고, 툴을 다루는 장면만 많았다.</p><p>2026.11.17</p>
-</div></div></div></li>
-<li class="row" id="ver-v2"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v2-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v2</span></button><div class="row-panel" id="ver-v2-panel" role="region" aria-label="v2"><div class="row-clip"><div class="copy">
-<p>대상 — 외주 브랜딩 프로젝트를 총괄하는 크리에이티브 디렉터</p><p>구성 — 결정 6개, 줄다리기 5개에 장면 30개</p><p>라인식이라 마인드맵으로 바꾸기로.</p><p>2026.11.17</p>
-</div></div></div></li>
-<li class="row" id="ver-v3"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v3-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v3</span></button><div class="row-panel" id="ver-v3-panel" role="region" aria-label="v3"><div class="row-clip"><div class="copy">
-<p>구성 — 주제에서 뻗는 마인드맵, 질문 가지 6개</p><p>번역체 같고, 묻고 싶은 층위와 거리가 있었다.</p><p>2026.11.17</p>
-</div></div></div></li>
-<li class="row" id="ver-v4"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v4-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v4</span></button><div class="row-panel" id="ver-v4-panel" role="region" aria-label="v4"><div class="row-clip"><div class="copy">
-<p>대상 — 최종 인터뷰이 뮤온</p><p>구성 — 내 질문 메모를 가지로</p><p>질문을 그대로 옮긴 수준이었다.</p><p>2026.11.17</p>
-</div></div></div></li>
-<li class="row" id="ver-v5"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v5-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v5</span></button><div class="row-panel" id="ver-v5-panel" role="region" aria-label="v5"><div class="row-clip"><div class="copy">
-<p>구성 — 현업 CD 역량을 단어로 펼친 지도. 큰 갈래 7개, 키워드 30개, 세부 77개</p><p>피그마 프레임 대신 이 페이지로 옮김</p><p>2026.11.17</p>
-</div></div></div></li>
-</ul>
+<ul class="version-list" aria-label="버전 기록"><li class="row" id="ver-v1"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v1-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v1</span></button><div class="row-panel" id="ver-v1-panel" role="region" aria-label="v1"><div class="row-clip"><div class="copy"><p>대상 — 에이전시 그래픽 디자이너</p><p>프로젝트 8단계 × 마주하는 상대 5가지 표, 장면 50개</p><p>범위가 좁고 툴을 다루는 장면만 많았다</p><p>2026.11.17</p></div></div></div></li><li class="row" id="ver-v2"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v2-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v2</span></button><div class="row-panel" id="ver-v2-panel" role="region" aria-label="v2"><div class="row-clip"><div class="copy"><p>대상 — 외주 브랜딩 프로젝트를 총괄하는 크리에이티브 디렉터</p><p>결정 6개, 줄다리기 5개</p><p>라인식 → 마인드맵으로</p><p>2026.11.17</p></div></div></div></li><li class="row" id="ver-v3"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v3-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v3</span></button><div class="row-panel" id="ver-v3-panel" role="region" aria-label="v3"><div class="row-clip"><div class="copy"><p>주제에서 뻗는 마인드맵, 질문 가지 6개</p><p>번역체 같고 묻고 싶은 층위와 거리가 있었다</p><p>2026.11.17</p></div></div></div></li><li class="row" id="ver-v4"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v4-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v4</span></button><div class="row-panel" id="ver-v4-panel" role="region" aria-label="v4"><div class="row-clip"><div class="copy"><p>대상 — 최종 인터뷰이 뮤온</p><p>내 질문 메모를 가지로 옮긴 수준이었다</p><p>2026.11.17</p></div></div></div></li><li class="row" id="ver-v5"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v5-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v5</span></button><div class="row-panel" id="ver-v5-panel" role="region" aria-label="v5"><div class="row-clip"><div class="copy"><p>현업 CD 역량을 단어로 펼친 지도</p><p>이 페이지로 옮김</p><p>2026.11.17</p></div></div></div></li><li class="row" id="ver-v6"><button type="button" class="row-title" aria-expanded="false" aria-controls="ver-v6-panel"><span class="bullet" aria-hidden="true"></span><span class="row-label">v6</span></button><div class="row-panel" id="ver-v6-panel" role="region" aria-label="v6"><div class="row-clip"><div class="copy"><p>내용을 다시 구성 — 한눈에, 역량 6개, 가설 6개</p><p>박스 형태, 가설마다 근거와 확인 질문, 꼬리 질문, 이렇게 들으면</p><p>2026.11.17</p></div></div></div></li></ul>
 </div></div></div>
 </section>
 
@@ -651,7 +416,7 @@ const sections=[...document.querySelectorAll('.log-section')].map(sec=>{
  const btn=sec.querySelector('.section-toggle'),body=sec.querySelector('.section-body');
  const set=open=>{sec.dataset.open=open;btn.setAttribute('aria-expanded',String(open));body.inert=!open;if(!open)sec.querySelectorAll('video').forEach(v=>v.pause())};
  btn.addEventListener('click',()=>set(sec.dataset.open!=='true'));
- set(false);
+ set(sec.dataset.defaultOpen==='true');
  return {sec,set};
 });
 
@@ -681,8 +446,8 @@ function drawGraph(){
  const len=graphLine.getTotalLength(),ease='cubic-bezier(.16,1,.3,1)';
  graphLine.animate([{strokeDasharray:len,strokeDashoffset:len},{strokeDasharray:len,strokeDashoffset:0}],{duration:1600,delay:250,easing:ease,fill:'backwards'});
  const dots=[...document.querySelectorAll('.graph-dot')];
- dots.forEach((d,i)=>d.animate([{opacity:0},{opacity:1}],{duration:500,delay:300+i*28,easing:ease,fill:'backwards'}));
- document.querySelectorAll('.graph-line-dash').forEach(p=>p.animate([{opacity:0},{opacity:1}],{duration:600,delay:300+(dots.length-2)*28,easing:ease,fill:'backwards'}));
+ dots.forEach((d,i)=>d.animate([{opacity:0},{opacity:1}],{duration:500,delay:300+i*150,easing:ease,fill:'backwards'}));
+ document.querySelectorAll('.graph-line-dash').forEach(p=>p.animate([{opacity:0},{opacity:1}],{duration:600,delay:300+(dots.length-2)*150,easing:ease,fill:'backwards'}));
 }
 
 // Scroll reveal: blocks rise in as they enter the viewport (once); those arriving together are staggered
