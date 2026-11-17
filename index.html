@@ -209,6 +209,11 @@ main{flex:1;margin:62px 0 160px}
 .box-label{display:flex;align-items:center;gap:8px;color:var(--faint);font-size:10pt;margin-bottom:6px!important}
 .box-title{color:var(--ink)}
 .box-body{color:var(--text);line-height:1.6}
+.mail{margin:20px 0 0 28px;max-width:calc(var(--title-w) + var(--col-gap) + var(--body-w))}
+.mail .mail-sub{margin-top:14px!important}
+.mail-body{margin-top:16px;padding-top:16px;border-top:1px solid var(--rule);color:var(--text);line-height:1.75}
+.mail-body p+p{margin-top:12px}
+@media(max-width:700px){.mail{margin-left:0}}
 .tag{color:var(--ink);border:1px solid var(--ink);border-radius:999px;padding:0 8px;font-size:9pt;line-height:18px}
 
 /* 마인드맵 — 주제 → 갈래 → 키워드 → 세부, 갈래 끝에 가설 · 질문 */
@@ -267,7 +272,7 @@ main{flex:1;margin:62px 0 160px}
 <main id="top">
 <header class="identity page"><h1><span class="slash">/</span>IAE</h1></header>
 <div class="page-shell">
-<div class="toc-rail"><nav class="toc" aria-label="페이지 목차"><span class="toc-bar" aria-hidden="true"></span><ol><li><a href="#assignment">과제</a></li><li><a href="#interviewee">인터뷰이</a></li><li><a href="#map">마인드맵</a></li><li><a href="#versions">버전 로그</a></li></ol></nav></div>
+<div class="toc-rail"><nav class="toc" aria-label="페이지 목차"><span class="toc-bar" aria-hidden="true"></span><ol><li><a href="#assignment">과제</a></li><li><a href="#interviewee">인터뷰이</a></li><li><a href="#email">섭외 메일</a></li><li><a href="#map">마인드맵</a></li><li><a href="#versions">버전 로그</a></li></ol></nav></div>
 <div class="page page-grid">
 <div class="sections">
 <section class="log-section " id="assignment" aria-labelledby="assignment-title" data-open="false">
@@ -281,6 +286,13 @@ main{flex:1;margin:62px 0 160px}
 <h2 class="log-title" id="interviewee-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="interviewee-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>인터뷰이</span></button></h2>
 <div class="section-body" id="interviewee-body" role="region" aria-labelledby="interviewee-title"><div class="section-clip"><div class="content">
 <div class="cards cards-4"><article class="box"><p class="box-label">인터뷰이</p><p class="box-title">뮤온 MUON</p></article><article class="box"><p class="box-label">분야</p><p class="box-title">케이팝 앨범 · 아티스트 아이덴티티 · 브랜드</p></article><article class="box"><p class="box-label">2026</p><p class="box-title">캠페인 디렉션 · 세트 디자인 · 웹 개발</p></article><article class="box"><p class="box-label">자체 작업</p><p class="box-title">매거진 · 가구 · 드로잉</p></article></div>
+</div></div></div>
+</section>
+
+<section class="log-section " id="email" aria-labelledby="email-title" data-open="false">
+<h2 class="log-title" id="email-title"><button type="button" class="section-toggle" aria-expanded="false" aria-controls="email-body"><span class="log-sign" aria-hidden="true"><img class="log-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAAelJREFUeAHt3MGN1EAURdEHmj1kQBEBZIAzAUIgAzIghJ4QyGAcAhnQkwEZgEvMEhZ+LVnXo3ukv2x1y1eqxe+Sk/MY2/wu501O4mWEYhAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGATGIDB32zyk82WbH9G/vN/mWwozyJLOq+h/Xqd8rh5ZMAaBMQiMQWAMAmMQGIPAGATGIDAGgTEIjEFg5nLxPp1lm7fZ77rNmnNY8vdOceM+B5tr++bi8yWdkeMvW1/K73tIySMLxiAwBoExCIxBYAwCYxAYg8AYBMYgMAaBMQjMXXrXp2mM7DfSm1vpF+lcs9+vnMin9Fvbo+djDuaRBWMQGIPAGATGIDAGgTEIjEFgDAJjEBiDwBgExiAwt6zfv2/zLvut6dfvazpLujX616fZa93mcwq3BJmv1hjpPGa/9v+M6Vp+5zSy30jJIwvGIDAGgTEIjEFgDAJjEBiDwBgExiAwBoExCMxc2F3SWdN5LD87tvmZzki3XFzSvQVi5IYFY3sR+UOONXL8qzVaS8rf6pEFYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPAGARmXiVd0znV6yMONp/Nmmdu5Dzb3ppHFoxBYAwCYxAYg8AYBMYgMAaBMQiMQWAMAmMQGIPA/AHpU7oMpiv2OQAAAABJRU5ErkJggg==" alt="" width="18" height="18"></span><span>섭외 메일</span></button></h2>
+<div class="section-body" id="email-body" role="region" aria-labelledby="email-title"><div class="section-clip"><div class="content">
+<article class="box mail"><p class="box-label">받는 곳</p><p class="box-body">info@muon-office.com</p><p class="box-label mail-sub">제목</p><p class="box-title">[인터뷰 요청] 감각을 그래픽으로 옮기는 일에 대해 여쭙고 싶습니다</p><div class="mail-body"><p>안녕하세요! 고려대학교 디자인조형학부와 Phi Institute of Design에서 디자인을 공부하고 있는 조용주입니다. 뮤온의 작업에 대해 인터뷰를 요청드리고 싶어 연락드립니다.</p><p>Phi에서 최성운 PD님(https://www.youtube.com/@think_experiment)의 &#x27;Interviewing as Exploration&#x27; 수업을 듣고 있습니다. 한 분을 만나 그분이 해 온 일을 깊이 인터뷰하고, 그 이야기를 매거진으로 엮는 수업인데, 그 최종 인터뷰를 뮤온에 부탁드리고 싶습니다.</p><p>저는 주로 사용자의 문제를 찾아 푸는 UXUI 디자인을 해 왔습니다. 이 분야는 사용성, 편의성, 효율성에 초점이 맞춰져 있어서, 감각이나 생각을 시각적으로 번역하는 그래픽 작업과는 다소 거리가 있다고 느껴 왔습니다. 그래픽과 브랜딩 디자인은 아트와 디자인이 섞여 있는 분야라는 생각도 듭니다. 그래서 느낀 것을 시각화하고 감각적으로 풀어내는 데에는 어떤 방법론과 미학이 있는지, 정답이 정해져 있지 않은 작업에서 무엇을 보고 &#x27;이거다&#x27;라고 정하는지 궁금해졌습니다. 뮤온은 이런 시각적 번역을 여러 분야에 걸쳐 꾸준히 해 오고 있는 스튜디오라고 생각해, 그 작업 뒤에 있는 생각과 선택을 직접 여쭤보고 싶었습니다.</p><p>인터뷰는 대표님과 1시간 정도를 생각하고 있습니다. 어려우시면 더 짧게도 괜찮고, 편하게 소개해 주실 수 있는 작업을 바탕으로 이야기 나누고 싶습니다. 스튜디오로 찾아뵙거나 온라인으로 진행할 수 있습니다. 일정은 12월 초를 생각하고 있지만, 편하신 시간에 맞추겠습니다. 질문지는 미리 보내드리겠습니다.</p><p>인터뷰 내용은 수업에서 함께 읽고 매거진 형식의 과제로 정리할 예정입니다. 녹음 여부와 인용 범위는 시작 전에 상의하고, 공개할 원고는 미리 보내드리겠습니다. 완성된 매거진도 한 부 전해 드리고 싶습니다.</p><p>바쁘신 때에 긴 글 읽어주셔서 감사합니다!</p><p>조용주 드림</p></div></article>
 </div></div></div>
 </section>
 
